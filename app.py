@@ -11,7 +11,7 @@ def health():
 def message():
     """Return a message."""
     return jsonify({
-        'message': ''message': 'Pipeline test - watch it deploy automatically!',',
+        'message': 'Pipeline test - watch it deploy automatically!',
         'environment': 'production'
     })
 

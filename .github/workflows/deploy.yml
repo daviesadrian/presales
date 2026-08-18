@@ -71,15 +71,14 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west2-docker.pkg.dev
 
-      - name: Build and push to Artifact Registry
+      - name: Build and push protected-api
         run: |
-          docker build -t europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcf-artifacts/presales-app:${{ github.sha }} .
-          docker push europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcf-artifacts/presales-app:${{ github.sha }}
+          docker build -t europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcf-artifacts/protected-api:${{ github.sha }} ./services/protected-api
+          docker push europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcf-artifacts/protected-api:${{ github.sha }}
 
-      - name: Deploy to Cloud Run
+      - name: Deploy protected-api to Cloud Run
         run: |
-          gcloud run deploy presales-app \
-            --image europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcf-artifacts/presales-app:${{ github.sha }} \
+          gcloud run deploy protected-api \
+            --image europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcf-artifacts/protected-api:${{ github.sha }} \
             --region europe-west2 \
-            --platform managed \
-            --allow-unauthenticated
+            --platform managed
